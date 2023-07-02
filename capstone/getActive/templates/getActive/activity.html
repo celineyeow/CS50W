@@ -1,0 +1,90 @@
+{% extends 'getActive/layout.html'%}
+{% load static %}
+
+{% block js %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      let button = document.querySelector(".enroll");
+      console.log(button);
+      button.addEventListener("click", function(){
+        let title = document.querySelector(".activity_title").innerHTML;
+        fetch(`/enroll/${title}`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(result => {
+            window.location.reload();
+            if (result["enrolled"]==true){
+              alert(`Congratulations, you've just enrolled the Category ${title}. Scroll down to see how to attend the meeting`);
+            } else {
+              alert(`You've just unenrolled the Category ${title}.`);
+            }
+        });
+    }, false);
+  });
+  </script>
+{% endblock %}
+
+{% block body %}
+  <div class="act_container">
+    <div class="act_wrapper">
+      <div class="act_section">
+        <h1 class="activity_title">{{data.title}}</h1>
+      </div>
+      
+      <div class="act_section">
+        <img src="{{data.image}}" class="activity_image">
+      </div>
+
+      <div class="act_section">
+        <h2>Description</h2>
+        <p>{{data.description}}</p>
+      </div>
+        <div class="act_section">
+          <h2>Details</h2>
+          <ul>
+            <li><strong>Date:</strong> {{data.date}} at {{data.start_hour}}</li>
+
+            {% ifnotequal data.duration "-30"%}
+              <li><strong>Duration:</strong> {{data.duration}} hours</li>
+            {% else %}
+              <li><strong>Duration:</strong> {{data.duration}} min</li>
+            {% endifnotequal %}
+
+            <li><strong>Difficulty:</strong> {{data.difficulty}}</li>
+            <li><strong>Location:</strong> {{data.location}}</li>
+            <li><strong>Category:</strong> {{data.category}}</li>
+            <li>Maximum number of <strong>participants:</strong> {{data.max_people}} people</li>
+          </ul>
+        </div>
+      
+        <div class="act_section">
+          <h2>Organiser</h2>
+          <p>{{data.about_author}}</p>
+        </div>
+
+        {% if isAttendant %}
+          <div class="act_section">
+            <h2 class="activity_h3">How to attend</h2>
+            <p>{{data.how_to_attend_meeting}}</p>
+          </div>
+        {% endif %}
+        
+      
+      <div class="act_section">
+        {% if not isAttendant %}
+          <div class="enroll">
+            <h1>ENROLL NOW!</h1>
+            <h4>Only 20 slots left!</h4>
+            <button class="btn btn-dark btn-lg">Enroll</button>
+          </div>
+        {% else %}
+          <div class="enroll">
+            <button class="btn btn-secondary btn-lg">Unenroll</button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

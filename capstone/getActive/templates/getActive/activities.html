@@ -1,0 +1,40 @@
+{% extends 'getActive/layout.html'%}
+{% load static %}
+{% block js %}<script src="{% static 'getActive/activities.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="mainContainer">
+    <form method="GET" id="search_form" onsubmit="return false">
+        {% csrf_token %}
+        <div class="search_bar">
+            <input type="search" autocomplete="off" autofocus placeholder="e.g. Badminton, Frisbee..." id="search_title">
+            <button class="btn btn-dark" type="submit" value="SUBMIT">Search</button>
+        </div>
+        <div class="suggestions" style="display: none;">
+            <div class="suggestions_list">
+
+            </div>
+        </div>  
+        <div class="filters_div">
+            {{form.as_table}}
+        </div>
+    </form>
+    
+    <div class="heading">
+        <h1 class="activities_title">LATEST ACTIVITIES</h1>
+    </div>
+    <div class="activities_content container_activities">
+    </div>   
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+        offset:200,
+        duration:1000
+    });
+    </script>
+
+</div>
+{% endblock %}
+

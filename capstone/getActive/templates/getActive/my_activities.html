@@ -1,0 +1,20 @@
+{% extends 'getActive/layout.html'%}
+{% load static %}
+{% block js %}
+<script src="{% static 'getActive/myActivities.js' %}"></script>
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />{% endblock %}
+
+{% block body %}
+<div>
+    <h1 class="activities_title">MY ACTIVITIES</h1>
+    <div class="activities_content container_activities">
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            offset: 200,
+            duration: 1000
+        });
+    </script>
+</div>
+{% endblock %}

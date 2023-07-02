@@ -1,0 +1,26 @@
+{% extends 'getActive/layout.html'%}
+{% load static %}
+
+{% block body %}
+    <div class="mainContainer">
+        <h1 class="loginTitle">Login</h1>
+
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="post" class="">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus class="form-control login_input" type="text" name="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input class="form-control login_input" type="password" name="password" placeholder="Password">
+            </div>
+            <div><input class="btn btn-primary" type="submit" value="Login"></div>
+        </form>
+        <div style="margin-top: 20px;">
+            <i>Don't have an account?</i> <a style="color: blue; " href="{% url 'register' %}">Register here</a>
+        </div>
+    </div>
+{% endblock %}

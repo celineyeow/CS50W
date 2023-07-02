@@ -1,0 +1,33 @@
+{% extends 'getActive/layout.html'%}
+{% load static %}
+
+{% block js %}
+<script src="{% static 'getActive/new_activity.js' %}"></script>{% endblock %}
+
+{% block body %}
+
+{% if error %}
+<p>{{error}}</p>
+
+{% else %}
+<style>
+    textarea{
+        display: block;
+    }
+</style>
+<div class="mainContainer">
+    <h1 id="new_activity_title">Create your own activity!</h1>
+    <div>
+        <form style="margin-top: 20px;" action="{% url 'new_activity' type=1 %}" method="POST"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <br>
+            <br>
+            <input type="file" name="img" id="img">
+            <div id="div_submit_newActivity"><input id="submit" type="submit" value="SUBMIT"></div>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
